@@ -1,0 +1,34 @@
+
+<%= form_for @lend_record do |f| %>
+  <div>
+    <% if @lend_record.errors.any? %>
+      <h2><%= pluralize(@lend_record.errors.count, "error") %>prohibit this record to create!</h2>
+      <ul>
+        <% for @lend_record.errors.full_messages in error %>
+          <li><%= error %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div> 
+
+  <div>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :email %><br />
+    <%= f.email_field :email %>
+  </div>
+  <div>
+    <%= f.label :amount %><br />
+    <%= f.text_field :amount %>
+  </div>
+  <div>
+    <%= f.label :date %><br />
+    <%= f.date_select :date %>
+  </div>
+
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>

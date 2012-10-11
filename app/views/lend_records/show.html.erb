@@ -1,0 +1,7 @@
+<h1>Show the record</h1>
+<p>Name:<%= @lend_record.name %></p>
+<p>Email:<%= @lend_record.email %></p>
+<p>Amount:<%= number_to_currency @lend_record.amount %></p>
+<p>Date: <%= @lend_record.date %></p>
+<%= link_to "Edit", edit_lend_record_path(@lend_record) %>
+<%= link_to "Back to list", lend_records_path %>
