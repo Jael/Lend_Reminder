@@ -1,6 +1,6 @@
 class LendRecordsController < ApplicationController
   def index
-    @lend_records = LendRecord.all
+    @lend_records = LendRecord.order(:cancel)
   end
   def new
     @lend_record = LendRecord.new
@@ -35,6 +35,13 @@ class LendRecordsController < ApplicationController
 
   def remind
     LendRecord.check_date
-    render :index
+    redirect_to lend_records_path 
+  end
+  
+  def canceled 
+    @lend_record = LendRecord.find(params[:id])
+    @lend_record.cancel_the_record
+    @lend_record.save
+    redirect_to lend_records_url, notice: "Successfully canceled the record!"
   end
 end

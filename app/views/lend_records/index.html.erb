@@ -1,21 +1,28 @@
-<h1>The Lend Record</h1>
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Amount</th>
-    <th>Date</th>
-  </tr>
-<% @lend_records.each do |lend_record| %>
-  <tr>
-    <td><%= lend_record.name %></td>
-    <td><%= lend_record.email %></td>
-    <td><%= lend_record.amount %></td>
-    <td><%= lend_record.date %></td>
-    <td><%= link_to "Edit", edit_lend_record_path(lend_record) %></td>
-    <td><%= link_to "show", lend_record %></td>
-    <td><%= link_to "destroy", lend_record, confirm: "Are you sure?", method: :delete %></td>
-  </tr>
-<% end %>
-    </table>
-<%= link_to "New Record", new_lend_record_path %>
+<center>
+  <h1>The Lend Record</h1>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Amount</th>
+      <th>Date</th>
+    </tr>
+    <% @lend_records.each do |lend_record| %>
+      <tr>
+      <td ><%= lend_record.name %></td>
+      <td ><%= lend_record.email %></td>
+      <td><%= number_to_currency lend_record.amount %></td>
+      <td><%= lend_record.date %></td>
+      <td><%= link_to "Edit", edit_lend_record_path(lend_record) %></td>
+      <td><%= link_to "show", lend_record %></td>
+      <td><%= link_to "destroy", lend_record, confirm: "Are you sure?", method: :delete %></td>
+      <% if lend_record.cancel == false %>
+        <td><%= link_to "cancel", canceled_lend_record_path(lend_record) %></td>
+      <% else %>
+        <td>cancelled</td>
+      <% end %>
+    </tr>
+  <% end %>
+  </table>
+  <%= link_to "New Record", new_lend_record_path %>
+</center>
