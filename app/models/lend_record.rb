@@ -1,5 +1,6 @@
 class LendRecord < ActiveRecord::Base
   attr_accessible :amount, :date, :email, :name
+  belongs_to :user
   def self.check_date
     LendRecord.all.each do |record|
       if record.cancel == false && record.date <= Date.today

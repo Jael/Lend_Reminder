@@ -1,5 +1,5 @@
 
-<%= form_for @lend_record do |f| %>
+<%= form_for @lend_record  do |f| %>
   <div>
     <% if @lend_record.errors.any? %>
       <h2><%= pluralize(@lend_record.errors.count, "error") %>prohibit this record to create!</h2>
@@ -25,7 +25,7 @@
   </div>
   <div>
     <%= f.label :date %>
-    <%= f.date_select :date %>
+    <%= f.text_field :date %>
   </div>
 
   <div>

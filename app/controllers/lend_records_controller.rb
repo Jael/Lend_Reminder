@@ -1,12 +1,17 @@
 class LendRecordsController < ApplicationController
   def index
-    @lend_records = LendRecord.order(:cancel)
+    @user = current_user
+    @search = @user.lend_records.search(params[:q])
+    @lend_records = @search.result
+    @lend_records = @lend_records.page(params[:page]).per(4)
   end
   def new
+    @user = current_user
     @lend_record = LendRecord.new
   end
   def create
-    @lend_record = LendRecord.new(params[:lend_record])
+    @user = current_user
+    @lend_record = @user.lend_records.new(params[:lend_record])
     if @lend_record.save
       redirect_to @lend_record, notice: "Successfully created the record."
     else 
@@ -14,13 +19,16 @@ class LendRecordsController < ApplicationController
     end
   end
   def show
-    @lend_record = LendRecord.find(params[:id])
+    @user = current_user
+    @lend_record = @user.lend_records.find(params[:id])
   end
   def edit
-    @lend_record = LendRecord.find(params[:id])
+    @user = current_user
+    @lend_record = @user.lend_records.find(params[:id])
   end
   def update
-    @lend_record = LendRecord.find(params[:id])
+    @user = current_user
+    @lend_record = @user.lend_records.find(params[:id])
     if @lend_record.update_attributes(params[:lend_record])
       redirect_to @lend_record, notice: "Successfully updated the record."
     else
@@ -28,20 +36,17 @@ class LendRecordsController < ApplicationController
     end
   end
   def destroy
-    @lend_record = LendRecord.find(params[:id])
+    @user = current_user 
+    @lend_record = @user.lend_records.find(params[:id])
     @lend_record.destroy
     redirect_to lend_records_path, notice: "Successfully destroyed the record."
   end
 
-  def remind
-    LendRecord.check_date
-    redirect_to lend_records_path 
-  end
-  
   def canceled 
-    @lend_record = LendRecord.find(params[:id])
+    @user = current_user
+    @lend_record = @user.lend_records.find(params[:id])
     @lend_record.cancel_the_record
     @lend_record.save
-    redirect_to lend_records_url, notice: "Successfully canceled the record!"
+    redirect_to lend_records_path, notice: "Successfully canceled the record!"
   end
 end

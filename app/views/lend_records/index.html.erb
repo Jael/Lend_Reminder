@@ -1,4 +1,31 @@
 <center>
+  <%= link_to "log out", log_out_path, confirm: "Are you sure?", method: :delete %>
+
+  <%= search_form_for @search, url: lend_records_path do |f| %>
+    <div class="field">
+    <%= f.label :name_cont, "Name" %>
+    <%= f.text_field :name_cont %>
+  </div>
+  <div class="field">
+    <%= f.label :email_cont, "Email" %>
+    <%= f.email_field :email_cont %>
+  </div>
+  <div class="field">
+    <%= f.label :amount_gteq, "Price" %>
+    <%= f.text_field :amount_gteq %>
+    <%= f.label :amount_lteq, "-" %>
+    <%= f.text_field :amount_lteq %>
+  </div>
+  <div class="field">
+    <%= f.label :date_gteq, "Date"%>
+    <%= f.text_field :date_gteq %>
+    <%= f.label :date_lteq, "-" %>
+    <%= f.text_field :date_lteq %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Search" %>
+  </div>
+<% end %>
   <h1>The Lend Record</h1>
   <table>
     <tr>
@@ -7,7 +34,10 @@
       <th>Amount</th>
       <th>Date</th>
     </tr>
-    <% @lend_records.each do |lend_record| %>
+    <% if @lend_records.empty? %>
+      There is no record
+  <% else %>
+      <% @lend_records.each do |lend_record| %>
       <tr>
       <td ><%= lend_record.name %></td>
       <td ><%= lend_record.email %></td>
@@ -17,12 +47,14 @@
       <td><%= link_to "show", lend_record %></td>
       <td><%= link_to "destroy", lend_record, confirm: "Are you sure?", method: :delete %></td>
       <% if lend_record.cancel == false %>
-        <td><%= link_to "cancel", canceled_lend_record_path(lend_record) %></td>
-      <% else %>
+        <td><%= link_to "cancel", canceled_lend_record_path(lend_record), confirm: "Are you sure?" %></td>
+    <% else %>
         <td>cancelled</td>
-      <% end %>
+    <% end %>
     </tr>
   <% end %>
+  <% end %>
   </table>
+  <%= paginate @lend_records%>
   <%= link_to "New Record", new_lend_record_path %>
 </center>
