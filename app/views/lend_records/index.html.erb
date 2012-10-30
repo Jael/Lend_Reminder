@@ -27,12 +27,19 @@
   </div>
 <% end %>
   <h1>The Lend Record</h1>
+  <p>
+  Download:
+  <%= link_to "CSV", lend_records_path(format: "csv") %> |
+  <%= link_to "Excel", lend_records_path(format: "xls") %>
+  </p>
+
+
   <table>
     <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Amount</th>
-      <th>Date</th>
+      <th><%= sort_link(@search, :name, "Name") %></th>
+      <th><%= sort_link(@search, :email, "Email") %></th>
+      <th><%= sort_link(@search, :amount, "Amount") %></th>
+      <th><%= sort_link(@search, :date, "Date") %></th>
     </tr>
     <% if @lend_records.empty? %>
       There is no record

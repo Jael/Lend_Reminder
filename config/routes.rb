@@ -1,5 +1,6 @@
 LendReminder::Application.routes.draw do
 
+  match "/auth/:provider/callback", :to => "sessions#create"
   get "signup" => "users#new", as: :signup
   resources :users 
   resources :lend_records do

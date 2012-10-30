@@ -4,12 +4,18 @@ class LendRecordsController < ApplicationController
     @search = @user.lend_records.search(params[:q])
     @lend_records = @search.result
     @lend_records = @lend_records.page(params[:page]).per(4)
+    respond_to do |format|
+      format.html
+      format.csv{send_data @search.result.to_csv}
+      format.xls
+    end
   end
   def new
     @user = current_user
     @lend_record = LendRecord.new
   end
   def create
+   params[:lend_record][:date] = Date.today.next_month if params[:lend_record][:date].empty?
     @user = current_user
     @lend_record = @user.lend_records.new(params[:lend_record])
     if @lend_record.save

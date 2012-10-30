@@ -6,5 +6,6 @@
   <%= label_tag :remember_me %>
   <%= check_box_tag :remember_me, 1, params[:remember_me] %>
   <%= link_to "Forget password?", new_password_reset_path %>
+  <%= link_to "github auth", "/auth/github" %>
   <%= submit_tag "提交" %>
 <% end %>

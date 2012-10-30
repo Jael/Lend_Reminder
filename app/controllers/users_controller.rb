@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  
+  skip_before_filter :authorize
   def new
     @user = User.new
   end
@@ -8,8 +8,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       session[:user_id] = @user
-      redirect_to user_lend_records_path(@user),notice: "fjdkafda"
-      binding.pry
+      redirect_to lend_records_path,notice: "fjdkafda"
     else
       flash.now.alert = "hh"
       render :new
